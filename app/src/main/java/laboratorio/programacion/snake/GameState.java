@@ -57,7 +57,7 @@ final class GameState {
 //        resume();
         // Now we can draw again
 //        startDrawing();
-//    }
+    }
 
     // aca deberia ir la logica de chocarse con las paredes o comerse a si misma
 //    void loseLife(SoundEngine se){
@@ -67,7 +67,7 @@ final class GameState {
 //            pause();
 //            endGame();
 //        }
-    }
+//    }
 
 
     void increaseScore(){

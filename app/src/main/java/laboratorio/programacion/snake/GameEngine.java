@@ -37,9 +37,6 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     private final int NUM_BLOCKS_WIDE = 40;
     private int mNumBlocksHigh;
 
-    // How many points does the player have
-    private int mScore;
-
     // Objects for drawing
     // se pasan referencias de estos objetos a las clases que representan los objetos del juego,
     // para que puedan dibujarse a sí mismos en lugar de hacerlo en esta clase.
@@ -113,7 +110,8 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
         mApple.spawn();
 
         // Reset the mScore
-        mScore = 0;
+        mGameState.startNewGame(); // a esto falta laburarlo, quedan cosas comentadas en el metodo
+
 
         // Setup mNextFrameTime so an update can triggered
         // Configurar mNextFrameTime a la hora actual, produce que se active una actualización de inmediato
@@ -170,7 +168,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
             mApple.spawn();
 
             // Add to  mScore
-            mScore = mScore + 1;
+            mGameState.increaseScore();
 
             // Play a sound
             mSP.play(mEat_ID, 1, 1, 0, 0, 1);
@@ -198,7 +196,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
             mPaint.setTextSize(120);
 
             // Draw the score
-            mCanvas.drawText("" + mScore, 20, 120, mPaint);
+            mCanvas.drawText("" + mGameState.getScore(), 20, 120, mPaint);
 
             // Draw the apple and the snake
             mApple.draw(mCanvas, mPaint);

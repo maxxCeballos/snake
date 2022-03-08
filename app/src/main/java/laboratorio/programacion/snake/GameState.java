@@ -13,14 +13,14 @@ final class GameState {
     // This object will have access to the deSpawnReSpawn method in GameEngine once it is initialized
     private GameStarter gameStarter;
 
-//    private int mScore;
+    private int mScore;
 //    private int mHighScore;
 
     // This is how we will make all the high scores persist
 //    private SharedPreferences.Editor mEditor;
 //
     GameState(GameStarter gs, Context context){
-//        // This initializes the gameStarter reference
+        // This initializes the gameStarter reference
         gameStarter = gs;
 //
 //        // Get the current high score
@@ -48,8 +48,8 @@ final class GameState {
 //        }
 //    }
 
-//    void startNewGame(){
-//        mScore = 0;
+    void startNewGame(){
+        mScore = 0;
 
         // Don't want to be drawing objects while deSpawnReSpawn is clearing them and spawning them again
 //        stopDrawing();
@@ -67,16 +67,16 @@ final class GameState {
 //            pause();
 //            endGame();
 //        }
-//    }
+    }
 
 
-//    void increaseScore(){
-//        mScore++;
-//    }
-//
-//    int getScore(){
-//        return mScore;
-//    }
+    void increaseScore(){
+        mScore++;
+    }
+
+    int getScore(){
+        return mScore;
+    }
 //
 //    int getHighScore(){
 //        return mHighScore;
@@ -101,9 +101,9 @@ final class GameState {
         mPlaying = false;
     }
 
-    boolean getGameOver(){
-        return mGameOver;
-    }
+//    boolean getGameOver(){
+//        return mGameOver;
+//    }
 
     boolean getThreadRunning(){
         return mPlaying;

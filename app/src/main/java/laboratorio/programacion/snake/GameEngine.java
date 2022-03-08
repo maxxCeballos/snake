@@ -18,7 +18,7 @@ import android.view.SurfaceView;
 import java.io.IOException;
 
 // This will be the game engine
-public class SnakeGame extends SurfaceView implements Runnable {
+public class GameEngine extends SurfaceView implements Runnable, GameStarter {
 
     // Objects for the game loop/thread
     private Thread mThread = null;
@@ -26,9 +26,7 @@ public class SnakeGame extends SurfaceView implements Runnable {
     // Control pausing between updates
     private long mNextFrameTime;
 
-    // Is the game currently playing and or paused?
-    private volatile boolean mPlaying = false;
-    private volatile boolean mPaused = true;
+    private GameState mGameState;
 
     // for playing sound effects
     private SoundPool mSP;
@@ -54,8 +52,10 @@ public class SnakeGame extends SurfaceView implements Runnable {
     // And an apple
     private Apple mApple;
 
-    public SnakeGame(Context context, Point size) {
+    public GameEngine(Context context, Point size) {
         super(context);
+
+        mGameState = new GameState(this, context);
 
         // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
@@ -124,8 +124,10 @@ public class SnakeGame extends SurfaceView implements Runnable {
     // Called by Android repeatedly while the thread is running
     @Override
     public void run() {
-        while (mPlaying) {
-            if(!mPaused) {
+
+        while (mGameState.getThreadRunning()) {
+
+            if(!mGameState.getPaused()) {
                 // Update 10 times a second
                 if (updateRequired()) {
                     update();
@@ -178,7 +180,7 @@ public class SnakeGame extends SurfaceView implements Runnable {
         if (mSnake.detectDeath()) {
             // Pause the game ready to start again
             mSP.play(mCrashID, 1, 1, 0, 0, 1);
-            mPaused =true;
+            mGameState.pause();
         }
     }
 
@@ -203,14 +205,14 @@ public class SnakeGame extends SurfaceView implements Runnable {
             mSnake.draw(mCanvas, mPaint);
 
             // Draw some text while paused
-            if(mPaused){
+            if(mGameState.getPaused()){
                 // Set the size and color of mPaint for the text
                 mPaint.setColor(Color.argb(255, 255, 255, 255));
-                mPaint.setTextSize(250);
+                mPaint.setTextSize(50);
 
                 // Draw the message
                 // We will give this an international upgrade soon
-                mCanvas.drawText(getResources().getString(R.string.tap_to_play), 200, 700,mPaint);
+                mCanvas.drawText(getResources().getString(R.string.tap_to_play), 200, 400,mPaint);
             }
 
             // Unlock the Canvas to show graphics for this frame
@@ -221,10 +223,12 @@ public class SnakeGame extends SurfaceView implements Runnable {
     @Override
     // Called by Android every time the player interacts with the screen
     public boolean onTouchEvent(MotionEvent motionEvent) {
+
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
-                if (mPaused) {
-                    mPaused = false;
+
+                if (mGameState.getPaused()) {
+                    mGameState.resume();
                     newGame();
                     // Don't want to process snake direction for this tap
                     return true;
@@ -233,7 +237,6 @@ public class SnakeGame extends SurfaceView implements Runnable {
                 // Let the Snake class handle the input
                 mSnake.switchHeading(motionEvent);
                 break;
-
             default:
                 break;
         }
@@ -242,19 +245,27 @@ public class SnakeGame extends SurfaceView implements Runnable {
 
     // Stop the thread
     public void pause() {
-        mPlaying = false;
+        mGameState.stopEverything();
+
         try {
             mThread.join();
         } catch (InterruptedException e) {
-            // Error
             Log.e("Exception", "pauseThread()" + e.getMessage());
         }
     }
 
     // Start the thread
     public void resume() {
-        mPlaying = true;
+        mGameState.startThread();
+
+        // pass this because the class implements Runnable and this is exactly what is required by de Thread class.
         mThread = new Thread(this);
         mThread.start();
+    }
+
+    @Override
+    public void deSpawnReSpawn() {
+        // Eventually this will despawn
+        // and then respawn all the game objects
     }
 }

@@ -14,24 +14,24 @@ final class GameState {
     private GameStarter gameStarter;
 
     private int mScore;
-//    private int mHighScore;
+    private int mHighScore;
 
     // This is how we will make all the high scores persist
-//    private SharedPreferences.Editor mEditor;
-//
+    private SharedPreferences.Editor mEditor;
+
     GameState(GameStarter gs, Context context){
         // This initializes the gameStarter reference
         gameStarter = gs;
-//
-//        // Get the current high score
-//        SharedPreferences prefs;
-//        prefs = context.getSharedPreferences("HiScore", Context.MODE_PRIVATE);
-//
-//        // Whenever we want to edit the HiScore file, we will need to use mEditor, and whenever we need to read the HiScore file, we will use prefs.
-//        mEditor = prefs.edit();
-//
-//        // Load high score from a entry in the file labeled "hiscore". If not available highscore set to zero 0
-//        mHighScore = prefs.getInt("hi_score", 0);
+
+        // Get the current high score
+        SharedPreferences prefs;
+        prefs = context.getSharedPreferences("HiScore", Context.MODE_PRIVATE);
+
+        // Whenever we want to edit the HiScore file, we will need to use mEditor, and whenever we need to read the HiScore file, we will use prefs.
+        mEditor = prefs.edit();
+
+        // Load high score from a entry in the file labeled "hiscore". If not available highscore set to zero 0
+        mHighScore = prefs.getInt("hi_score", 0);
     }
 
 
@@ -77,10 +77,10 @@ final class GameState {
     int getScore(){
         return mScore;
     }
-//
-//    int getHighScore(){
-//        return mHighScore;
-//    }
+
+    int getHighScore(){
+        return mHighScore;
+    }
 
     void pause(){
         mPaused = true;

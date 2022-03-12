@@ -28,17 +28,13 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
 
     private GameState mGameState;
     private SoundEngine mSoundEngine;
+    private HUD mHUD;
+    private Renderer mRenderer;
 
     // The size in segments of the playable area
     private final int NUM_BLOCKS_WIDE = 40;
     private int mNumBlocksHigh;
 
-    // Objects for drawing
-    // se pasan referencias de estos objetos a las clases que representan los objetos del juego,
-    // para que puedan dibujarse a sí mismos en lugar de hacerlo en esta clase.
-    private Canvas mCanvas;
-    private SurfaceHolder mSurfaceHolder;
-    private Paint mPaint;
 
     // A snake ssss
     private Snake mSnake;
@@ -50,15 +46,13 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
 
         mGameState = new GameState(this, context);
         mSoundEngine = new SoundEngine(context);
+        mHUD = new HUD(size);
+        mRenderer = new Renderer(this);
 
         // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
         // How many blocks of the same size will fit into the height
         mNumBlocksHigh = size.y / blockSize;
-
-        // Initialize the drawing objects
-        mSurfaceHolder = getHolder();
-        mPaint = new Paint();
 
         // Call the constructors of our two game objects
         mApple = new Apple(context, new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh), blockSize);
@@ -97,7 +91,8 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
                     update();
                 }
             }
-            draw();
+
+            mRenderer.draw(mGameState, mHUD);
         }
     }
 
@@ -148,41 +143,6 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
         }
     }
 
-    // Do all the drawing
-    public void draw() {
-        // Get a lock on the mCanvas
-        if (mSurfaceHolder.getSurface().isValid()) {
-            mCanvas = mSurfaceHolder.lockCanvas();
-
-            // Fill the screen with a color
-            mCanvas.drawColor(Color.argb(255, 26, 128, 182));
-
-            // Set the size and color of the mPaint for the text
-            mPaint.setColor(Color.argb(255, 255, 255, 255));
-            mPaint.setTextSize(120);
-
-            // Draw the score
-            mCanvas.drawText("" + mGameState.getScore(), 20, 120, mPaint);
-
-            // Draw the apple and the snake
-            mApple.draw(mCanvas, mPaint);
-            mSnake.draw(mCanvas, mPaint);
-
-            // Draw some text while paused
-            if(mGameState.getPaused()){
-                // Set the size and color of mPaint for the text
-                mPaint.setColor(Color.argb(255, 255, 255, 255));
-                mPaint.setTextSize(50);
-
-                // Draw the message
-                // We will give this an international upgrade soon
-                mCanvas.drawText(getResources().getString(R.string.tap_to_play), 200, 400,mPaint);
-            }
-
-            // Unlock the Canvas to show graphics for this frame
-            mSurfaceHolder.unlockCanvasAndPost(mCanvas);
-        }
-    }
 
     @Override
     // Called by Android every time the player interacts with the screen

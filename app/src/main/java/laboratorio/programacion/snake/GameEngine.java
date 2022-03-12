@@ -16,9 +16,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // This will be the game engine
-public class GameEngine extends SurfaceView implements Runnable, GameStarter {
+public class GameEngine extends SurfaceView implements Runnable, GameStarter, GameEngineBroadcaster {
 
     // Objects for the game loop/thread
     private Thread mThread = null;
@@ -26,10 +27,13 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     // Control pausing between updates
     private long mNextFrameTime;
 
+    private ArrayList<InputObserver> inputObservers = new ArrayList();
+    UIController mUIController;
+
     private GameState mGameState;
     private SoundEngine mSoundEngine;
-    private HUD mHUD;
-    private Renderer mRenderer;
+    HUD mHUD;
+    Renderer mRenderer;
 
     // The size in segments of the playable area
     private final int NUM_BLOCKS_WIDE = 40;
@@ -44,6 +48,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     public GameEngine(Context context, Point size) {
         super(context);
 
+        mUIController = new UIController(this);
         mGameState = new GameState(this, context);
         mSoundEngine = new SoundEngine(context);
         mHUD = new HUD(size);
@@ -139,7 +144,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
         if (mSnake.detectDeath()) {
             // Pause the game ready to start again
             mSoundEngine.crashSound();
-            mGameState.pause();
+            mGameState.endGame();
         }
     }
 
@@ -147,28 +152,36 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     @Override
     // Called by Android every time the player interacts with the screen
     public boolean onTouchEvent(MotionEvent motionEvent) {
-
-        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_UP:
-
-                if (mGameState.getPaused()) {
-                    mGameState.resume();
-                    newGame();
-                    // Don't want to process snake direction for this tap
-                    return true;
-                }
-
-                // Let the Snake class handle the input
-                mSnake.switchHeading(motionEvent);
-                break;
-            default:
-                break;
+        // Handle the player's input here
+        // But in a new way
+        for (InputObserver o : inputObservers) {
+            o.handleInput(motionEvent, mGameState, mHUD.getControls());
         }
+
         return true;
+
+
+//        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+//            case MotionEvent.ACTION_UP:
+//
+//                if (mGameState.getPaused()) {
+//                    mGameState.resume();
+//                    newGame();
+//                    // Don't want to process snake direction for this tap
+//                    return true;
+//                }
+//
+//                // Let the Snake class handle the input
+//                mSnake.switchHeading(motionEvent);
+//                break;
+//            default:
+//                break;
+//        }
+//        return true;
     }
 
     // Stop the thread
-    public void pause() {
+    public void stopEverything() {
         mGameState.stopEverything();
 
         try {
@@ -179,7 +192,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     }
 
     // Start the thread
-    public void resume() {
+    public void startThread() {
         mGameState.startThread();
 
         // pass this because the class implements Runnable and this is exactly what is required by de Thread class.
@@ -191,5 +204,10 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     public void deSpawnReSpawn() {
         // Eventually this will despawn
         // and then respawn all the game objects
+    }
+
+    // For the game engine broadcaster interface
+    public void addObserver(InputObserver o) {
+        inputObservers.add(o);
     }
 }

@@ -34,13 +34,13 @@ public class SnakeActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        mGameEngine.resume();
+        mGameEngine.startThread();
     }
 
     // Stop the thread in snakeGame
     @Override
     protected void onPause() {
         super.onPause();
-        mGameEngine.pause();
+        mGameEngine.stopEverything();
     }
 }

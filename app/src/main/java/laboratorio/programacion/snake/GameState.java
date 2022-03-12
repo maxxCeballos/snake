@@ -8,7 +8,7 @@ final class GameState {
     private static volatile boolean mPlaying = false;
     private static volatile boolean mPaused = true;
     private static volatile boolean mGameOver = true;
-//    private static volatile boolean mDrawing = false;
+    private static volatile boolean mDrawing = false;
 
     // This object will have access to the deSpawnReSpawn method in GameEngine once it is initialized
     private GameStarter gameStarter;
@@ -35,40 +35,32 @@ final class GameState {
     }
 
 
-//    private void endGame(){
-//        mGameOver = true;
-//        mPaused = true;
+    void endGame(){
+        mGameOver = true;
+        mPaused = true;
 
-//        if(mScore > mHighScore){
-//            mHighScore = mScore;
-//
-//            // Save high score
-//            mEditor.putInt("hi_score", mHighScore);
-//            mEditor.commit();
-//        }
-//    }
+        if(mScore > mHighScore){
+            mHighScore = mScore;
+
+            // Save high score
+            mEditor.putInt("hi_score", mHighScore);
+            mEditor.commit();
+        }
+    }
 
     void startNewGame(){
         mScore = 0;
 
         // Don't want to be drawing objects while deSpawnReSpawn is clearing them and spawning them again
-//        stopDrawing();
-//        gameStarter.deSpawnReSpawn();
-//        resume();
+        stopDrawing();
+
+        gameStarter.deSpawnReSpawn();
+
+        resume();
+
         // Now we can draw again
-//        startDrawing();
+        startDrawing();
     }
-
-    // aca deberia ir la logica de chocarse con las paredes o comerse a si misma
-//    void loseLife(SoundEngine se){
-//        mNumShips--;
-//        se.playPlayerExplode();
-//        if(mNumShips == 0){
-//            pause();
-//            endGame();
-//        }
-//    }
-
 
     void increaseScore(){
         mScore++;
@@ -101,9 +93,9 @@ final class GameState {
         mPlaying = false;
     }
 
-//    boolean getGameOver(){
-//        return mGameOver;
-//    }
+    boolean getGameOver(){
+        return mGameOver;
+    }
 
     boolean getThreadRunning(){
         return mPlaying;
@@ -113,18 +105,16 @@ final class GameState {
         mPlaying = true;
     }
 
-//    private void stopDrawing(){
-//        mDrawing = false;
-//    }
-//
-//    private void startDrawing(){
-//        mDrawing = true;
-//    }
-//
-//    boolean getDrawing() {
-//        return mDrawing;
-//    }
+    private void stopDrawing(){
+        mDrawing = false;
+    }
 
+    private void startDrawing(){
+        mDrawing = true;
+    }
 
+    boolean getDrawing() {
+        return mDrawing;
+    }
 
 }

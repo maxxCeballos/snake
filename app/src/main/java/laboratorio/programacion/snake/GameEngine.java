@@ -208,7 +208,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     }
 
     // Stop the thread
-    public void pause() {
+    public void stopEverything() {
         mGameState.stopEverything();
 
         try {
@@ -219,7 +219,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     }
 
     // Start the thread
-    public void resume() {
+    public void startThread() {
         mGameState.startThread();
 
         // pass this because the class implements Runnable and this is exactly what is required by de Thread class.

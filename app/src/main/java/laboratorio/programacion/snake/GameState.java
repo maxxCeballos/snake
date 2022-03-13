@@ -58,10 +58,6 @@ final class GameState {
         return mHighScore;
     }
 
-    void pause(){
-        mPaused = true;
-    }
-
     boolean getPaused(){
         return mPaused;
     }
@@ -75,10 +71,6 @@ final class GameState {
         mPaused = true;
         mGameOver = true;
         mPlaying = false;
-    }
-
-    boolean getGameOver(){
-        return mGameOver;
     }
 
     boolean getThreadRunning(){

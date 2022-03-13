@@ -8,10 +8,6 @@ final class GameState {
     private static volatile boolean mPlaying = false;
     private static volatile boolean mPaused = true;
     private static volatile boolean mGameOver = true;
-//    private static volatile boolean mDrawing = false;
-
-    // This object will have access to the deSpawnReSpawn method in GameEngine once it is initialized
-    private GameStarter gameStarter;
 
     private int mScore;
     private int mHighScore;
@@ -19,9 +15,7 @@ final class GameState {
     // This is how we will make all the high scores persist
     private SharedPreferences.Editor mEditor;
 
-    GameState(GameStarter gs, Context context){
-        // This initializes the gameStarter reference
-        gameStarter = gs;
+    GameState(Context context){
 
         // Get the current high score
         SharedPreferences prefs;
@@ -50,25 +44,7 @@ final class GameState {
 
     void startNewGame(){
         mScore = 0;
-
-        // Don't want to be drawing objects while deSpawnReSpawn is clearing them and spawning them again
-//        stopDrawing();
-//        gameStarter.deSpawnReSpawn();
-//        resume();
-        // Now we can draw again
-//        startDrawing();
     }
-
-    // aca deberia ir la logica de chocarse con las paredes o comerse a si misma
-//    void loseLife(SoundEngine se){
-//        mNumShips--;
-//        se.playPlayerExplode();
-//        if(mNumShips == 0){
-//            pause();
-//            endGame();
-//        }
-//    }
-
 
     void increaseScore(){
         mScore++;
@@ -112,19 +88,5 @@ final class GameState {
     void startThread(){
         mPlaying = true;
     }
-
-//    private void stopDrawing(){
-//        mDrawing = false;
-//    }
-//
-//    private void startDrawing(){
-//        mDrawing = true;
-//    }
-//
-//    boolean getDrawing() {
-//        return mDrawing;
-//    }
-
-
 
 }

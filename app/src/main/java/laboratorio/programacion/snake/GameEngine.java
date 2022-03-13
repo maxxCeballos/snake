@@ -12,7 +12,7 @@ import android.view.SurfaceView;
 
 
 // This will be the game engine
-public class GameEngine extends SurfaceView implements Runnable, GameStarter {
+public class GameEngine extends SurfaceView implements Runnable {
 
     // Objects for the game loop/thread
     private Thread mThread = null;
@@ -43,7 +43,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     public GameEngine(Context context, Point size) {
         super(context);
 
-        mGameState = new GameState(this, context);
+        mGameState = new GameState(context);
         mSoundEngine = new SoundEngine(context);
 
         // Work out how many pixels each block is
@@ -73,7 +73,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
         mApple.spawn();
 
         // Reset the mScore
-        mGameState.startNewGame(); // a esto falta laburarlo, quedan cosas comentadas en el metodo
+        mGameState.startNewGame();
 
 
         // Setup mNextFrameTime so an update can triggered
@@ -225,9 +225,4 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
         mThread.start();
     }
 
-    @Override
-    public void deSpawnReSpawn() {
-        // Eventually this will despawn
-        // and then respawn all the game objects
-    }
 }

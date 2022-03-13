@@ -37,6 +37,9 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     private Snake mSnake;
     private Apple mApple;
 
+    // scaling text
+    private int mTextFormatting;
+
     public GameEngine(Context context, Point size) {
         super(context);
 
@@ -47,6 +50,8 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
         int blockSize = size.x / NUM_BLOCKS_WIDE;
         // How many blocks of the same size will fit into the height
         mNumBlocksHigh = size.y / blockSize;
+
+        mTextFormatting = size.x / 50; // value 50 is a little arbitrary, seemed to work well whit varying screen sizes.
 
         // Initialize the drawing objects
         mSurfaceHolder = getHolder();
@@ -151,10 +156,11 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
-            mPaint.setTextSize(120);
+            mPaint.setTextSize(mTextFormatting);
 
             // Draw the score
-            mCanvas.drawText("" + mGameState.getScore(), 20, 120, mPaint);
+            mCanvas.drawText("HiScore: " + mGameState.getHighScore(), mTextFormatting,mTextFormatting, mPaint);
+            mCanvas.drawText("Score: " + mGameState.getScore(), mTextFormatting, mTextFormatting * 2, mPaint);
 
             // Draw the apple and the snake
             mApple.draw(mCanvas, mPaint);

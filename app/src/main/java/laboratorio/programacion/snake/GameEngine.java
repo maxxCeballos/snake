@@ -1,21 +1,15 @@
 package laboratorio.programacion.snake;
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import java.io.IOException;
+
 
 // This will be the game engine
 public class GameEngine extends SurfaceView implements Runnable, GameStarter {
@@ -34,15 +28,13 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     private int mNumBlocksHigh;
 
     // Objects for drawing
-    // se pasan referencias de estos objetos a las clases que representan los objetos del juego,
-    // para que puedan dibujarse a sí mismos en lugar de hacerlo en esta clase.
+    // se pasan referencias de estos objetos a las clases que representan los objetos del juego, para que puedan dibujarse a sí mismos en lugar de hacerlo en esta clase.
     private Canvas mCanvas;
     private SurfaceHolder mSurfaceHolder;
     private Paint mPaint;
 
-    // A snake ssss
+    // Game Objects
     private Snake mSnake;
-    // And an apple
     private Apple mApple;
 
     public GameEngine(Context context, Point size) {

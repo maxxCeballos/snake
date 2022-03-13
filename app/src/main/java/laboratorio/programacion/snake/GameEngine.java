@@ -24,7 +24,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
     private SoundEngine mSoundEngine;
 
     // The size in segments of the playable area
-    private final int NUM_BLOCKS_WIDE = 40;
+    private final int NUM_BLOCKS_WIDE = 50;
     private int mNumBlocksHigh;
 
     // Objects for drawing
@@ -136,7 +136,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter {
         if (mSnake.detectDeath()) {
             // Pause the game ready to start again
             mSoundEngine.crashSound();
-            mGameState.pause();
+            mGameState.endGame();
         }
     }
 

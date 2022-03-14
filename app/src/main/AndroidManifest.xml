@@ -10,16 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Snake">
         <activity
-            android:name=".SnakeActivity"
-            android:exported="true"
-            android:theme= "@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
-            <!-- Esta linea declara que el juego utilizará t.odo el espacio de la pantalla que el dispositivo pone a disposición sin menús adicionales -->
+            android:name="laboratorio.programacion.login.RegisterActivity"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SnakeActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+
+            <!-- Esta linea declara que el juego utilizará t.odo el espacio de la pantalla que el dispositivo pone a disposición sin menús adicionales -->
+
+
         </activity>
     </application>
 

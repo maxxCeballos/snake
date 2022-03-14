@@ -46,7 +46,7 @@ public class DAL extends SQLiteOpenHelper {
 
         value.put(Util.KEY_USERNAME, account.getUsername());
         value.put(Util.KEY_PASSWORD, account.getPassword());
-        value.put(Util.KEY_HIGHSCORE, 0); // score start from 0.
+        value.put(Util.KEY_HIGHSCORE, account.getHighscore()); // score start from 0.
 
         db.insert(Util.TABLE_NAME, null, value); // insert row
         db.close(); // close db connection

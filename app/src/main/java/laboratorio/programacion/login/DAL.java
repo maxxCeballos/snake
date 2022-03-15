@@ -59,7 +59,7 @@ public class DAL extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(
                 Util.TABLE_NAME,
-                new String[]{ Util.KEY_USERNAME, Util.KEY_PASSWORD, Util.KEY_HIGHSCORE},
+                new String[]{ Util.KEY_ID, Util.KEY_USERNAME, Util.KEY_PASSWORD, Util.KEY_HIGHSCORE},
                 Util.KEY_USERNAME + "=?", new String[] {username},
                 null, null, null, null
         );
@@ -97,5 +97,26 @@ public class DAL extends SQLiteOpenHelper {
         }
 
         return accounts;
+    }
+
+    // UPDATE ACCOUNT
+    public int updateHighScoreAccount(Account account) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Util.KEY_HIGHSCORE, account.getHighscore());
+
+        // return the number of rows affected
+        return db.update(Util.TABLE_NAME, values, Util.KEY_USERNAME + "=?", new String[] {account.getUsername()});
+    }
+
+
+    // DELETE ACCOUNT
+    // use only testing
+    public void deleteAccount(Account account) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Util.TABLE_NAME, Util.KEY_USERNAME + "=?", new String[] {account.getUsername()});
+
+        db.close();
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import laboratorio.programacion.snake.R;
 import laboratorio.programacion.snake.SnakeActivity;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText usuario, password;
     Button btnEntrar, btnRegistrar, btnSalir;
+    DAL db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnEntrar.setOnClickListener(this);
         btnRegistrar.setOnClickListener(this);
         btnSalir.setOnClickListener(this);
+
+        db = new DAL(this);
     }
 
 
@@ -41,8 +45,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (view.getId()){
             case R.id.btnEntrar:
-                intent = new Intent(MainActivity.this, SnakeActivity.class);
-                startActivity(intent);
+                if(login()) {
+                    intent = new Intent(MainActivity.this, SnakeActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "CUENTA NO REGISTRADA", Toast.LENGTH_LONG).show();
+                }
+
+                usuario.getText().clear();
+                password.getText().clear();
+
                 break;
             case R.id.btnRegistrar:
                 intent = new Intent(MainActivity.this, RegisterActivity.class);
@@ -53,5 +65,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 System.exit(0);
                 break;
         }
+    }
+
+
+    public boolean login() {
+        boolean isRegistered = false;
+        Account accountDB;
+        String username = this.usuario.getText().toString();
+        String password = this.password.getText().toString();
+
+        accountDB = db.getAccount(username);
+
+        if (accountDB != null && accountDB.getPassword().equals(password)) isRegistered = true;
+
+        return isRegistered;
     }
 }

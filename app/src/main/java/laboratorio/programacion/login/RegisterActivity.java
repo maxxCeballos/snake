@@ -18,6 +18,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     EditText usuario, password;
     Button btnRegistrar, btnCancelar;
+    DAL db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnRegistrar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
 
-//        DAL db = new DAL(this);
+        db = new DAL(this);
 
         // Insert accounts
 //        Log.d("Insert: ", "Inserting...");
@@ -87,10 +88,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         switch (view.getId()) {
             case R.id.btnCreateAccount:
-//                Account account = new Account(usuario.getText().toString(), password.getText().toString(), 0);
+                db.addAccount(new Account(usuario.getText().toString(), password.getText().toString(), 0));
+
+                // Get 1 account
+                Account aAccount = db.getAccount(usuario.getText().toString());
+                Log.d("CREATE-ACCOUNT ", "USERNAME: " + aAccount.getUsername() + " PASS: " + aAccount.getPassword() + " HIGHSCORE: " + aAccount.getHighscore());
 //                if ( account.isNull()){}
 //                if( dalAccount.insertAccount(account) ) {
-//                    Toast.makeText(this, "CUENTA REGISTRADA", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "CUENTA REGISTRADA", Toast.LENGTH_LONG).show();
 //                } else {
 //                    Toast.makeText(this, "ERROR EN REGISTRO", Toast.LENGTH_LONG).show();
 //                }
@@ -99,6 +104,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
 
-        finish(); // para que cierre la activity Register.
+        finish(); // close activity Register.
     }
 }

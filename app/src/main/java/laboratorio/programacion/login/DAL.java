@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class DAL extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_ACCOUNT_TABLE = "CREATE TABLE " + Util.TABLE_NAME + "("
+        String CREATE_ACCOUNT_TABLE = "CREATE TABLE IF NOT EXISTS " + Util.TABLE_NAME + "("
                 + Util.KEY_ID + " INTEGER PRIMARY KEY,"
                 + Util.KEY_USERNAME + " TEXT UNIQUE,"
                 + Util.KEY_PASSWORD + " TEXT,"
@@ -55,6 +56,8 @@ public class DAL extends SQLiteOpenHelper {
     // GET ACCOUNT
     public Account getAccount(String username) {
 
+        Log.d("QUERY", "Account: " + username);
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -64,14 +67,14 @@ public class DAL extends SQLiteOpenHelper {
                 null, null, null, null
         );
 
-        if (cursor != null ) {
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
+
+            // index columns pass to cursor
+            return new Account(cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
         }
 
-        // index columns pass to cursor
-        Account account = new Account(cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
-
-        return account;
+        return null;
     }
 
     // GET ALL ACCOUNTS

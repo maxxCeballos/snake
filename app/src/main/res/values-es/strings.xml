@@ -12,4 +12,8 @@
     <string name="play_game">Jugar!</string>
     <string name="back_menu">Volver</string>
     <string name="sound">Sonido</string>
+    <string name="account_not_found">Cuenta no Registrada</string>
+    <string name="account_already_exists">Cuenta ya Registrada</string>
+    <string name="account_created">Cuenta Registrada</string>
+    <string name="account_created_error">Error en Registro</string>
 </resources>

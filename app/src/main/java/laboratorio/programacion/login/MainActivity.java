@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent = new Intent(MainActivity.this, RoomActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(this, "CUENTA NO REGISTRADA", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.account_not_found, Toast.LENGTH_LONG).show();
                 }
 
                 usuario.getText().clear();
@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.btnRegistrar:
-
-                // Falta agregar el check de si la cuenta a agregar ya existe.
-
                 intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 break;

@@ -11,4 +11,8 @@
     <string name="play_game">Play!</string>
     <string name="back_menu">Back</string>
     <string name="sound">Sound</string>
+    <string name="account_not_found">Account not Registered</string>
+    <string name="account_already_exists">Account Already Exists</string>
+    <string name="account_created">Account Created</string>
+    <string name="account_created_error">Failed Create Account</string>
 </resources>

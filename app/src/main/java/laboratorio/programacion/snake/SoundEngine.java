@@ -9,6 +9,8 @@ import android.media.SoundPool;
 import android.os.Build;
 import java.io.IOException;
 
+import laboratorio.programacion.login.Util;
+
 
 public class SoundEngine {
 
@@ -52,11 +54,11 @@ public class SoundEngine {
 
 
     void eatSound(){
-        mSP.play(mEat_ID, 1, 1, 0, 0, 1);
+        if(Util.SOUND_ENABLE) mSP.play(mEat_ID, 1, 1, 0, 0, 1);
     }
 
     void crashSound(){
-        mSP.play(mCrashID, 1, 1, 0, 0, 1);
+        if(Util.SOUND_ENABLE) mSP.play(mCrashID, 1, 1, 0, 0, 1);
     }
 
 }

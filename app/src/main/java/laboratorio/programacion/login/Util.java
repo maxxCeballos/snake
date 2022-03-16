@@ -13,5 +13,6 @@ public class Util {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_HIGHSCORE = "highscore";
 
-
+    // Sound
+    public static boolean SOUND_ENABLE = true;
 }

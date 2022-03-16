@@ -15,4 +15,10 @@ public class Util {
 
     // Sound
     public static boolean SOUND_ENABLE = true;
+
+    // DB
+    public static DAL db;
+
+    // Account played
+    public static Account accountPlayed;
 }

@@ -3,6 +3,8 @@ package laboratorio.programacion.snake;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import laboratorio.programacion.login.Util;
+
 final class GameState {
 
     private static volatile boolean mPlaying = false;
@@ -39,6 +41,9 @@ final class GameState {
             // Save high score
             mEditor.putInt("hi_score", mHighScore);
             mEditor.commit();
+
+            Util.accountPlayed.setHighscore(mHighScore);
+            Util.db.updateHighScoreAccount(Util.accountPlayed);
         }
     }
 

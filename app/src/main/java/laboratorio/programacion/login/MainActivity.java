@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText usuario, password;
     Button btnEntrar, btnRegistrar, btnSalir;
-    DAL db;
+//    DAL db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRegistrar.setOnClickListener(this);
         btnSalir.setOnClickListener(this);
 
-        db = new DAL(this);
+        Util.db = new DAL(this);
     }
 
 
@@ -77,9 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String username = this.usuario.getText().toString();
         String password = this.password.getText().toString();
 
-        accountDB = db.getAccount(username);
+        accountDB = Util.db.getAccount(username);
 
-        if (accountDB != null && accountDB.getPassword().equals(password)) isRegistered = true;
+
+        if (accountDB != null && accountDB.getPassword().equals(password)) {
+            isRegistered = true;
+            Util.accountPlayed = accountDB;
+        }
 
         return isRegistered;
     }

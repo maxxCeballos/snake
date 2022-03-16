@@ -35,14 +35,42 @@ android:background="@android:color/black">
             android:textSize="20dp"
             android:gravity="center"/>
 
-        <ListView
+        <TableLayout
             android:id="@+id/rankingList"
             android:layout_width="match_parent"
-            android:layout_height="315dp"
+            android:layout_height="300dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_weight="0"
-            android:background="#ffffff" />
+            android:background="#ffffff"
+            android:layout_gravity="center">
+
+<!--            <TableRow>-->
+<!--                <TextView-->
+<!--                    android:layout_column="1"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Open..." />-->
+
+<!--                <TextView-->
+<!--                    android:layout_column="2"-->
+<!--                    android:gravity="right"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Ctrl-O" />-->
+<!--            </TableRow>-->
+
+<!--            <TableRow>-->
+
+<!--                <TextView-->
+<!--                    android:layout_column="1"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Save..." />-->
+
+<!--                <TextView-->
+<!--                    android:gravity="right"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Ctrl-S" />-->
+<!--            </TableRow>-->
+        </TableLayout>
 
 
         <Button

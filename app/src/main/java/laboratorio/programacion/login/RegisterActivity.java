@@ -18,7 +18,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     EditText usuario, password;
     Button btnRegistrar, btnCancelar;
-    DAL db;
+//    DAL db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnRegistrar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
 
-        db = new DAL(this);
+        Util.db = new DAL(this);
 
         // Insert accounts
 //        Log.d("Insert: ", "Inserting...");
@@ -43,8 +43,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //        db.addAccount(new Account("bob789", "123456", 80));
 
         // Read accounts
-        Log.d("Reading: ", "Reading all accounts...");
-        List<Account> accountList = db.getAllAccounts();
+//        Log.d("Reading: ", "Reading all accounts...");
+//        List<Account> accountList = db.getAllAccounts();
 
         // Get 1 account
 //        Account aAccount = db.getAccount("bob456");
@@ -73,10 +73,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //
 //        accountList = db.getAllAccounts();
 //
-        for (Account account : accountList ) {
-            String log = "USERNAME: " +  account.getUsername() + " PASSWORD: " + account.getPassword() + " HIGHSCORE: " + account.getHighscore();
-            Log.d("LIST-ACCOUNTS: ", log);
-        }
+//        for (Account account : accountList ) {
+//            String log = "USERNAME: " +  account.getUsername() + " PASSWORD: " + account.getPassword() + " HIGHSCORE: " + account.getHighscore();
+//            Log.d("LIST-ACCOUNTS: ", log);
+//        }
 
 
     }
@@ -88,10 +88,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         switch (view.getId()) {
             case R.id.btnCreateAccount:
-                db.addAccount(new Account(usuario.getText().toString(), password.getText().toString(), 0));
+                Util.db.addAccount(new Account(usuario.getText().toString(), password.getText().toString(), 0));
 
                 // Get 1 account
-                Account account = db.getAccount(usuario.getText().toString());
+                Account account = Util.db.getAccount(usuario.getText().toString());
 
                 if(account != null) {
                     Toast.makeText(this, "CUENTA REGISTRADA", Toast.LENGTH_LONG).show();

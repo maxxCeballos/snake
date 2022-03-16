@@ -4,7 +4,7 @@ package laboratorio.programacion.login;
  * ACCOUNT MODEL TO REPRESENT ON DATABASE
  */
 
-public class Account {
+public class Account implements Comparable<Account>{
     private int id;
     private String username;
     private String password;
@@ -40,6 +40,8 @@ public class Account {
     }
 
 
-
-
+    @Override
+    public int compareTo(Account account) {
+        return 0;
+    }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="laboratorio.programacion.login.MainActivity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context="laboratorio.programacion.login.RoomActivity"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@android:color/black">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,40 +15,38 @@
         <ImageView
             android:id="@+id/logo_main"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="45dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="0"
             android:contentDescription="Imagen Principal snake-apple"
             app:srcCompat="@drawable/mainlogo" />
 
-        <EditText
-            android:id="@+id/username"
+        <TextView
+            android:id="@+id/rankingTitle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginRight="40dp"
-            android:layout_weight="0"
-            android:background="@android:color/white"
-            android:hint="@string/username"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="15dp" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_weight="0"
-            android:background="@android:color/white"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:paddingLeft="15dp" />
+            android:background="#FF0000"
+            android:textColor="#ffffff"
+            android:text="RANKING"
+            android:textSize="20dp"
+            android:gravity="center"/>
+
+        <ListView
+            android:id="@+id/rankingList"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_weight="0"
+            android:background="#ffffff" />
+
 
         <Button
-            android:id="@+id/btnEntrar"
+            android:id="@+id/btnPlay"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="40dp"
@@ -56,12 +54,12 @@
             android:layout_marginRight="40dp"
             android:layout_weight="0"
             android:background="#FF0000"
-            android:text="@string/login"
+            android:text="@string/play_game"
             android:textColor="#ffffff"
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/btnRegistrar"
+            android:id="@+id/btnBack"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="40dp"
@@ -69,23 +67,25 @@
             android:layout_marginRight="40dp"
             android:layout_weight="0"
             android:background="#FF0000"
-            android:text="@string/signup"
+            android:text="@string/back_menu"
             android:textColor="#ffffff"
             android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/btnSalir"
+        <Switch
+            android:id="@+id/switchSound"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="100dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginRight="100dp"
             android:layout_weight="0"
-            android:background="#FF0000"
-            android:text="@string/exit"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:background="#ffffff"
+            android:enabled="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:showText="false"
+            android:text="@string/sound"
+            android:textColor="#000000" />
 
     </LinearLayout>
 

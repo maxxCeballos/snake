@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.btnEntrar:
                 if(login()) {
-                    intent = new Intent(MainActivity.this, SnakeActivity.class);
+                    intent = new Intent(MainActivity.this, RoomActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(this, "CUENTA NO REGISTRADA", Toast.LENGTH_LONG).show();
@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.btnRegistrar:
+
+                // Falta agregar el check de si la cuenta a agregar ya existe.
+
                 intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 break;

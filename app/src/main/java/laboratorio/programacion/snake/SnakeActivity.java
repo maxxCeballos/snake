@@ -8,7 +8,7 @@ import android.app.Activity;
 
 public class SnakeActivity extends Activity {
 
-    SnakeGame mSnakeGame;
+    GameEngine mGameEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +23,10 @@ public class SnakeActivity extends Activity {
         display.getSize(size);
 
         // Create a new instance of the SnakeGame class
-        mSnakeGame = new SnakeGame(this, size);
+        mGameEngine = new GameEngine(this, size);
 
         // Make snakeGame the view of the Activity
-        setContentView(mSnakeGame);
+        setContentView(mGameEngine);
         //setContentView(R.layout.activity_main);
     }
 
@@ -34,13 +34,13 @@ public class SnakeActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        mSnakeGame.resume();
+        mGameEngine.startThread();
     }
 
     // Stop the thread in snakeGame
     @Override
     protected void onPause() {
         super.onPause();
-        mSnakeGame.pause();
+        mGameEngine.stopEverything();
     }
 }

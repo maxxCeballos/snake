@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Snake</string>
     <string name="tap_to_play">Toque para jugar!</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Entrar</string>
+    <string name="signup">Registrar</string>
+    <string name="exit">Salir</string>
+    <string name="create_account">Crear Cuenta</string>
+    <string name="cancel_create_account">Cancelar</string>
+    <string name="play_game">Jugar!</string>
+    <string name="back_menu">Volver</string>
+    <string name="sound">Sonido</string>
+    <string name="account_not_found">Cuenta no Registrada</string>
+    <string name="account_already_exists">Cuenta ya Registrada</string>
+    <string name="account_created">Cuenta Registrada</string>
+    <string name="account_created_error">Error en Registro</string>
 </resources>

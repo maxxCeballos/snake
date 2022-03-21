@@ -8,18 +8,30 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Snake">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".SnakeActivity"
-            android:exported="true"
-            android:theme= "@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
-            <!-- Esta linea declara que el juego utilizará t.odo el espacio de la pantalla que el dispositivo pone a disposición sin menús adicionales -->
-
+            android:name="laboratorio.programacion.login.RoomActivity"
+            android:exported="false" />
+        <activity
+            android:name="laboratorio.programacion.login.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="laboratorio.programacion.login.RegisterActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".SnakeActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+
+            <!-- Esta linea declara que el juego utilizará t.odo el espacio de la pantalla que el dispositivo pone a disposición sin menús adicionales -->
+
         </activity>
     </application>
 

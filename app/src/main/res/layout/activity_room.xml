@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context="laboratorio.programacion.login.RoomActivity"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@android:color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/logo_main"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0"
+            android:contentDescription="Imagen Principal snake-apple"
+            app:srcCompat="@drawable/mainlogo" />
+
+        <TextView
+            android:id="@+id/rankingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_weight="0"
+            android:background="#FF0000"
+            android:textColor="#ffffff"
+            android:text="RANKING"
+            android:textSize="20dp"
+            android:gravity="center"/>
+
+        <TableLayout
+            android:id="@+id/rankingList"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_weight="0"
+            android:background="#ffffff"
+            android:layout_gravity="center">
+
+<!--            <TableRow>-->
+<!--                <TextView-->
+<!--                    android:layout_column="1"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Open..." />-->
+
+<!--                <TextView-->
+<!--                    android:layout_column="2"-->
+<!--                    android:gravity="right"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Ctrl-O" />-->
+<!--            </TableRow>-->
+
+<!--            <TableRow>-->
+
+<!--                <TextView-->
+<!--                    android:layout_column="1"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Save..." />-->
+
+<!--                <TextView-->
+<!--                    android:gravity="right"-->
+<!--                    android:padding="3dip"-->
+<!--                    android:text="Ctrl-S" />-->
+<!--            </TableRow>-->
+        </TableLayout>
+
+
+        <Button
+            android:id="@+id/btnPlay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_weight="0"
+            android:background="#FF0000"
+            android:text="@string/play_game"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_weight="0"
+            android:background="#FF0000"
+            android:text="@string/back_menu"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <Switch
+            android:id="@+id/switchSound"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="100dp"
+            android:layout_weight="0"
+            android:background="#ffffff"
+            android:checked="true"
+            android:enabled="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:showText="false"
+            android:text="@string/sound"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+</ScrollView>
+
+

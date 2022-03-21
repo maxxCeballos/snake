@@ -155,7 +155,6 @@ public class Snake {
     }
 
     boolean checkDinner(Point l) {
-        //if (snakeXs[0] == l.x && snakeYs[0] == l.y) { //todo esta linea estaba en el codigo pero no se que onda, parece que quedo de mas.
 
         // check if the Point parameter has the same coordinates as the snake's head
         if (segmentLocations.get(0).x == l.x && segmentLocations.get(0).y == l.y) {
@@ -177,7 +176,6 @@ public class Snake {
 
     // si este código estuviera nuevamente en la clase SnakeGame, entonces la clase SnakeGame no solo se desordenaría bastante,
     // sino que también necesitaría acceso a algunas de las variables miembro de esta clase Snake.
-    // Ahora imagine si tuviera varios objetos complejos de dibujar y es fácil imaginar que la clase SnakeGame se convertiría en una especie de pesadilla.
     void draw(Canvas canvas, Paint paint) {
 
         // Don't run this code if ArrayList has nothing in it

@@ -1,24 +1,18 @@
 package laboratorio.programacion.snake;
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import java.io.IOException;
+
 
 // This will be the game engine
-public class SnakeGame extends SurfaceView implements Runnable {
+public class GameEngine extends SurfaceView implements Runnable {
 
     // Objects for the game loop/thread
     private Thread mThread = null;
@@ -26,72 +20,38 @@ public class SnakeGame extends SurfaceView implements Runnable {
     // Control pausing between updates
     private long mNextFrameTime;
 
-    // Is the game currently playing and or paused?
-    private volatile boolean mPlaying = false;
-    private volatile boolean mPaused = true;
-
-    // for playing sound effects
-    private SoundPool mSP;
-    private int mEat_ID = -1;
-    private int mCrashID = -1;
+    private GameState mGameState;
+    private SoundEngine mSoundEngine;
 
     // The size in segments of the playable area
-    private final int NUM_BLOCKS_WIDE = 40;
+    private final int NUM_BLOCKS_WIDE = 50;
     private int mNumBlocksHigh;
 
-    // How many points does the player have
-    private int mScore;
-
     // Objects for drawing
-    // se pasan referencias de estos objetos a las clases que representan los objetos del juego,
-    // para que puedan dibujarse a sí mismos en lugar de hacerlo en esta clase.
+    // se pasan referencias de estos objetos a las clases que representan los objetos del juego, para que puedan dibujarse a sí mismos en lugar de hacerlo en esta clase.
     private Canvas mCanvas;
     private SurfaceHolder mSurfaceHolder;
     private Paint mPaint;
 
-    // A snake ssss
+    // Game Objects
     private Snake mSnake;
-    // And an apple
     private Apple mApple;
 
-    public SnakeGame(Context context, Point size) {
+    // scaling text
+    private int mTextFormatting;
+
+    public GameEngine(Context context, Point size) {
         super(context);
+
+        mGameState = new GameState(context);
+        mSoundEngine = new SoundEngine(context);
 
         // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
         // How many blocks of the same size will fit into the height
         mNumBlocksHigh = size.y / blockSize;
 
-        // Initialize the SoundPool
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                            .build();
-
-            mSP = new SoundPool.Builder()
-                    .setMaxStreams(5)
-                    .setAudioAttributes(audioAttributes)
-                    .build();
-        } else {
-            mSP = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        }
-
-        try {
-            AssetManager assetManager = context.getAssets();
-            AssetFileDescriptor descriptor;
-
-            // Prepare the sounds in memory
-            descriptor = assetManager.openFd("get_apple.ogg");
-            mEat_ID = mSP.load(descriptor, 0);
-
-            descriptor = assetManager.openFd("snake_death.ogg");
-            mCrashID = mSP.load(descriptor, 0);
-
-        } catch (IOException e) {
-            // Error
-        }
+        mTextFormatting = size.x / 50; // value 50 is a little arbitrary, seemed to work well whit varying screen sizes.
 
         // Initialize the drawing objects
         mSurfaceHolder = getHolder();
@@ -113,7 +73,8 @@ public class SnakeGame extends SurfaceView implements Runnable {
         mApple.spawn();
 
         // Reset the mScore
-        mScore = 0;
+        mGameState.startNewGame();
+
 
         // Setup mNextFrameTime so an update can triggered
         // Configurar mNextFrameTime a la hora actual, produce que se active una actualización de inmediato
@@ -124,8 +85,10 @@ public class SnakeGame extends SurfaceView implements Runnable {
     // Called by Android repeatedly while the thread is running
     @Override
     public void run() {
-        while (mPlaying) {
-            if(!mPaused) {
+
+        while (mGameState.getThreadRunning()) {
+
+            if(!mGameState.getPaused()) {
                 // Update 10 times a second
                 if (updateRequired()) {
                     update();
@@ -168,17 +131,17 @@ public class SnakeGame extends SurfaceView implements Runnable {
             mApple.spawn();
 
             // Add to  mScore
-            mScore = mScore + 1;
+            mGameState.increaseScore();
 
             // Play a sound
-            mSP.play(mEat_ID, 1, 1, 0, 0, 1);
+            mSoundEngine.eatSound();
         }
 
         // Did the snake die?
         if (mSnake.detectDeath()) {
             // Pause the game ready to start again
-            mSP.play(mCrashID, 1, 1, 0, 0, 1);
-            mPaused =true;
+            mSoundEngine.crashSound();
+            mGameState.endGame();
         }
     }
 
@@ -193,24 +156,25 @@ public class SnakeGame extends SurfaceView implements Runnable {
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
-            mPaint.setTextSize(120);
+            mPaint.setTextSize(mTextFormatting);
 
             // Draw the score
-            mCanvas.drawText("" + mScore, 20, 120, mPaint);
+            mCanvas.drawText("HiScore: " + mGameState.getHighScore(), mTextFormatting,mTextFormatting, mPaint);
+            mCanvas.drawText("Score: " + mGameState.getScore(), mTextFormatting, mTextFormatting * 2, mPaint);
 
             // Draw the apple and the snake
             mApple.draw(mCanvas, mPaint);
             mSnake.draw(mCanvas, mPaint);
 
             // Draw some text while paused
-            if(mPaused){
+            if(mGameState.getPaused()){
                 // Set the size and color of mPaint for the text
                 mPaint.setColor(Color.argb(255, 255, 255, 255));
-                mPaint.setTextSize(250);
+                mPaint.setTextSize(50);
 
                 // Draw the message
                 // We will give this an international upgrade soon
-                mCanvas.drawText(getResources().getString(R.string.tap_to_play), 200, 700,mPaint);
+                mCanvas.drawText(getResources().getString(R.string.tap_to_play), 200, 400,mPaint);
             }
 
             // Unlock the Canvas to show graphics for this frame
@@ -221,10 +185,12 @@ public class SnakeGame extends SurfaceView implements Runnable {
     @Override
     // Called by Android every time the player interacts with the screen
     public boolean onTouchEvent(MotionEvent motionEvent) {
+
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
-                if (mPaused) {
-                    mPaused = false;
+
+                if (mGameState.getPaused()) {
+                    mGameState.resume();
                     newGame();
                     // Don't want to process snake direction for this tap
                     return true;
@@ -233,7 +199,6 @@ public class SnakeGame extends SurfaceView implements Runnable {
                 // Let the Snake class handle the input
                 mSnake.switchHeading(motionEvent);
                 break;
-
             default:
                 break;
         }
@@ -241,20 +206,23 @@ public class SnakeGame extends SurfaceView implements Runnable {
     }
 
     // Stop the thread
-    public void pause() {
-        mPlaying = false;
+    public void stopEverything() {
+        mGameState.stopEverything();
+
         try {
             mThread.join();
         } catch (InterruptedException e) {
-            // Error
             Log.e("Exception", "pauseThread()" + e.getMessage());
         }
     }
 
     // Start the thread
-    public void resume() {
-        mPlaying = true;
+    public void startThread() {
+        mGameState.startThread();
+
+        // pass this because the class implements Runnable and this is exactly what is required by de Thread class.
         mThread = new Thread(this);
         mThread.start();
     }
+
 }
